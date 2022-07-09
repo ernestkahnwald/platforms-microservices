@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+option java_package = "com.kahnwald.platform";
+option java_outer_classname = "PlatformProto";
+
+service GrpcPlatform {
+  rpc GetAllPlatforms (GetAllRequest) returns (PlatformResponse);
+}
+
+message GetAllRequest {}
+
+message GrpcPlatformModel {
+//  1 - is position
+  int64 platformId = 1;
+  string name = 2;
+  string publisher = 3;
+}
+
+message PlatformResponse {
+  repeated GrpcPlatformModel platform = 1;
+}

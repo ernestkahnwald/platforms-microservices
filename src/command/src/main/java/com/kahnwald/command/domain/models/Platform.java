@@ -1,13 +1,11 @@
-package com.kahnwald.platform.domain.model;
+package com.kahnwald.command.domain.models;
 
 import lombok.*;
 import org.hibernate.Hibernate;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -19,15 +17,16 @@ public class Platform {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private Long externalId;
     private String name;
-    private String publisher;
-    private String cost;
 
-    public Platform(String name, String publisher, String cost) {
-         this.name = name;
-         this.publisher = publisher;
-         this.cost = cost;
-    }
+    @OneToMany(
+        mappedBy = "platform",
+        cascade = CascadeType.ALL,
+        orphanRemoval = true
+    )
+    @ToString.Exclude
+    private Set<Command> commands;
 
     @Override
     public boolean equals(Object o) {
